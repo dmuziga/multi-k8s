@@ -1,0 +1,24 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    -docker build -t dmuziga/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true dmuziga/react-test npm test
+
+after_success:
+    - docker build -t dmuziga/multi-client ./client
+    - docker build -t dmuziga/multi-nginx ./nginx
+    - docker build -t dmuziga/multi-client ./server
+    - docker build -t dmuziga/multi-worker ./worker
+
+    # Log in to the Docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    # Take those images and push them to docker hub
+    - docker push dmuziga/multi-client
+    - docker push dmuziga/multi-nginx
+    - docker push dmuziga/multi-server
+    - docker push dmuziga/multi-worker

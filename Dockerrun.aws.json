@@ -1,0 +1,37 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "ContainerDefinitions": [
+        {
+            "name": "client",
+            "image": "dmuziga/multi-client",
+            "hostname": "client",
+            "essential": false
+        },
+        {
+            "name": "server",
+            "image": "dmuziga/multi-server",
+            "hostname": "api",
+            "essential": false
+        },
+        {
+            "name": "worker",
+            "image": "dmuziga/multi-worker",
+            "hostname": "worker",
+            "essential": false
+        },
+        {
+            "name": "nginx",
+            "image": "dmuziga/multi-nginx",
+            "hostname": "nginx",
+            "essential":true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links":["client", "server"]
+        }
+
+    ]
+}

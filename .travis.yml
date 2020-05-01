@@ -11,7 +11,7 @@ script:
 after_success:
     - docker build -t dmuziga/multi-client ./client
     - docker build -t dmuziga/multi-nginx ./nginx
-    - docker build -t dmuziga/multi-client ./server
+    - docker build -t dmuziga/multi-server ./server
     - docker build -t dmuziga/multi-worker ./worker
 
     # Log in to the Docker CLI

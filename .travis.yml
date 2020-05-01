@@ -24,7 +24,6 @@ after_success:
     - docker push dmuziga/multi-server
     - docker push dmuziga/multi-worker
 deploy:
-    edge: true
     provider: elasticbeanstalk
     region: us-west-2
     app: multi-docker
